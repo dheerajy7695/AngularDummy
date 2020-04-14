@@ -4,10 +4,10 @@
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
         <div class="social-login">
             <button class="btn facebook-btn social-btn mr-1" type="button">
-                <span> <i class="fab fa-facebook-f"></i> Sign in with Facebook </span>
+                <span> <i class="fa fa-facebook-f"></i> Sign in with Facebook </span>
             </button>
             <button class="btn google-btn social-btn" type="button">
-                <span> <i class="fab fa-google-plus-g"></i> Sign in with Google+ </span>
+                <span> <i class="fa fa-google-plus"></i> Sign in with Google+ </span>
             </button>
         </div>
         <p style="text-align:center"> OR </p>
@@ -28,7 +28,7 @@
                 Password is required
             </span>
         </div>
-        <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
+        <button class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in"></i> Sign in</button>
         <div *ngIf="invalidLogin" class="text-green m-1">
             <span class="font-size-small">Invalid credentials.</span>
         </div>
@@ -36,7 +36,7 @@
         <hr>
         <button class="btn btn-primary btn-block" type="button" id="btn-signup"
             (click)="showHideRegisterForm('Register')">
-            <i class="fas fa-user-plus"></i> Sign up
+            <i class="fa fa-user-plus"></i> Sign up
         </button>
     </form>
 

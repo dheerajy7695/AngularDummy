@@ -1,6 +1,11 @@
 .bg-theme-colored {
-    background-color: #00A4EF !important;
+    background-color: #1976d2 !important;
 }
 .text-white{
     color: white !important ;
+}
+
+.nav_style {
+    font-size: 16px;
+    font-weight: 600 !important;
 }

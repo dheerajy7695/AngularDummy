@@ -25,16 +25,16 @@
   }
   
   /* Set a style for the submit button */
-  .btn {
-    background-color: dodgerblue;
-    color: white;
-    padding: 15px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-  }
+  
   
   .btn:hover {
     opacity: 1;
   }
+
+  .bg_light_blue{
+    background-color: #74afed !important;
+  }
+
+  .bs-datepicker-container, bs-daterangepicker-container {
+    z-index: 3000 !important ;
+}

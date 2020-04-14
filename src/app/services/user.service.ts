@@ -10,7 +10,7 @@ import { from } from 'rxjs';
 })
 export class UserService {
 
-  baseUrl: string = 'http://localhost:6001/api/';
+  baseUrl: string = 'http://localhost:4000/api/';
 
   constructor(private http: HttpClient) { }
 

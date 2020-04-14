@@ -34,9 +34,20 @@ export class LoginComponent implements OnInit {
     this.showHideRegisterForm('Login');
     this.createLoginForm();
     this.createUserForm();
+    this.dropDownData();
   }
 
   get f() { return this.addUserForm.controls; }
+
+  dropDownData() {
+    this.userService.securityQustnArr.subscribe((data) => {
+      this.securityQuestion = data;
+    });
+
+    this.userService.selectGender.subscribe((response) => {
+      this.genderData = response;
+    })
+  }
 
   createLoginForm() {
     this.loginForm = this.formBuilder.group({
