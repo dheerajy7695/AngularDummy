@@ -5,3 +5,6 @@
     color: #dc3545;
     font-size: 12px;
 }
+
+/*Date picker container*/
+ bs-datepicker-container { z-index: 3000 !important; }
