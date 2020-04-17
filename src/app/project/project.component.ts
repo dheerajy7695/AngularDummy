@@ -25,6 +25,8 @@ export class ProjectComponent implements OnInit {
   deleteErrorMsg: any;
   deleteResponse: any;
   chosenDate: any;
+  updateRes: any;
+  updateProjectData: any;
 
   constructor(private formBuilder: FormBuilder,
     private modalService: BsModalService,
@@ -118,9 +120,36 @@ export class ProjectComponent implements OnInit {
   }
 
   editProjectModal(projectData, template: TemplateRef<any>) {
-    console.log('projectData-->', projectData);
+    this.updateProjectData = projectData
     this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+    let dataesData = projectData;
     this.projectForm.patchValue(projectData);
+    this.projectForm.controls['managerStartDate'].setValue(new Date(dataesData.managerStartDate));
+    this.projectForm.controls['expiryDate'].setValue(new Date(dataesData.expiryDate));
+    this.projectForm.controls['custodianDate'].setValue(new Date(dataesData.custodianDate));
+    this.projectForm.controls['shipDate'].setValue(new Date(dataesData.shipDate));
+  }
+
+  updateProject() {
+    this.submitted = false;
+    this.projectError = "";
+    if (this.projectForm.invalid) {
+      this.submitted = true;
+      return
+    } else {
+      let updatePayload = this.projectForm.value;
+      updatePayload._id = this.updateProjectData._id;
+      if (updatePayload) {
+        this.projectService.updateProject(updatePayload).subscribe((response) => {
+          this.updateRes = response;
+          this.closeModal();
+          this.getProjectList();
+        }, ((error) => {
+          this.projectError = error.message || 'Something went wrong, Please try agian';
+        })
+        )
+      }
+    }
   }
 
   deleteProjectModal(projectData, template) {

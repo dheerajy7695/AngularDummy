@@ -24,7 +24,7 @@ export class ProjectService {
   }
 
   updateProject(updatePayload): Observable<any> {
-    return this.http.patch<any>(`${this.baseUrl}update`, + updatePayload._id, updatePayload);
+    return this.http.patch<any>(`${this.baseUrl}update/${updatePayload._id}`, updatePayload);
   }
 
   deleteProject(id: number): Observable<any> {

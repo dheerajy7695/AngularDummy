@@ -27,9 +27,9 @@
         </div>
     </div>
 
-    <div class="col-lg-12 wrapper m-t-sm">
+    <div class="col-lg-12 wrapper">
         <div class="row" *ngIf="listGridView=='Grid'">
-            <div class="col-sm-3 pb-10" *ngFor="let project of projectList; let i=index">
+            <div class="col-sm-3 m-t-sm pb-10" *ngFor="let project of projectList; let i=index">
                 <div class="card">
                     <div class="card-header card_hed_bg p-xs bg_light_blue font-16">
                         <span class="text-white">{{project.projectId | titlecase}} - {{project.projectName | titlecase}}
@@ -140,7 +140,10 @@
 <!-- Create And Update Project Modal Popup -->
 <ng-template #template>
     <div class="modal-header">
-        <h4 class="modal-title pull-left font-bold text-black font-16">Create Project</h4>
+        <h4 *ngIf="!updateProjectData?._id" class="modal-title pull-left font-bold text-black font-16">Create Project
+        </h4>
+        <h4 *ngIf="updateProjectData?._id" class="modal-title pull-left font-bold text-black font-16">Update Project
+        </h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -361,9 +364,15 @@
                 </div>
             </div>
         </div>
+        <div class="row pull-center">
+            <span class="text-warning text-center"> {{projectError}} </span>
+        </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="createProject()">Create</button>
+        <button type="button" class="btn btn-success" *ngIf="!updateProjectData?._id"
+            (click)="createProject()">Create</button>
+        <button type="button" class="btn btn-success" *ngIf="updateProjectData?._id"
+            (click)="updateProject()">Update</button>
         <button type="button" class="btn btn-info" (click)="closeModal()">Close</button>
     </div>
 </ng-template>
