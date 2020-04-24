@@ -16,6 +16,7 @@ import { ProjectComponent } from './project/project.component';
 import { UserComponent } from './user/user.component';
 
 import { ModalModule } from 'ngx-bootstrap';
+import { SerachComponent } from './serach/serach.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ModalModule } from 'ngx-bootstrap';
     HeaderComponent,
     LoginComponent,
     ProjectComponent,
-    UserComponent
+    UserComponent,
+    SerachComponent
   ],
   imports: [
     BrowserModule,

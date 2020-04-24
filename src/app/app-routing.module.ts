@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { ProjectComponent } from './project/project.component';
 import { UserComponent } from './user/user.component';
 import { from } from 'rxjs';
+import { SerachComponent } from './serach/serach.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: "user",
     component: UserComponent
+  },
+  {
+    path: "search",
+    component: SerachComponent
   }
 ];
 

@@ -35,6 +35,10 @@ export class ProjectService {
     return this.http.get<any>(`${this.baseUrl}getById/` + id).pipe(catchError(this.handleError));
   }
 
+  searchProjectByName(projectName: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}serach/` + projectName).pipe(catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     console.log("Getting error", error);
     return throwError(error);
