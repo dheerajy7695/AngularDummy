@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { from } from 'rxjs';
+import { AuthService } from '../authGuard/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   addUserForm: FormGroup;
   invalidLogin: boolean = false;
   invalidLoginError: any;
-  userData: Object;
+  userData: any;
   securityQuestion: { id: number; name: string; }[];
   submitted: boolean = false;
   userFormData: Object;
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private routerModule: RouterModule,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -88,17 +90,17 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.controls.password.value
     };
 
-    this.userService.login(loginPayload).subscribe(
-      (response) => {
+    this.userService.login(loginPayload).subscribe((response) => {
+      if (response) {
         this.userData = response;
+        this.authService.setToken(response);
         this.router.navigate(['/home']);
-      },
-      (error) => {
-        this.invalidLoginError = error.error;
-        this.invalidLogin = true;
-        alert(error.error);
       }
-    );
+    }, (error) => {
+      this.invalidLoginError = error.error;
+      this.invalidLogin = true;
+      alert(error.error);
+    });
   };
 
   registerUserClick() {

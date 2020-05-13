@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user.service';
+import { ProjectService } from '../services/project/project.service';
+import { ItemService } from '../services/item/item.service';
 
 @Component({
   selector: 'app-home',
@@ -8,83 +11,82 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   onselectValue: any;
-  constructor() { }
+  userRecord: Object;
+  projectError: string;
+  projectRecords: any;
+  userError: string;
+  userCount: any;
+  projectCount: any;
+  itemCount: any;
+  itemRecords: any;
+  itemError: string;
+
+  constructor(private userService: UserService,
+    private projectService: ProjectService,
+    private itemService: ItemService
+  ) { }
 
   ngOnInit(): void {
+    this.getUser();
+    this.getProjects();
+    this.getItems();
+    this.getProjectCount();
+    this.getItemCount();
+    this.getUserCount();
   }
 
-  securityDataList = [
-    {
-      id: 102,
-      name: "What is your Birthdate?",
-      states: [
-        {
-          name: "Andhra Pradesh",
-          id: "1001"
-        },
-        {
-          name: "Arunachal pradesh",
-          id: "1002"
-        },
-        {
-          name: "Assam",
-          id: "1003"
-        },
-        {
-          name: "Sikkim",
-          id: "1004"
-        }
-      ]
-    },
-    {
-      id: 103,
-      name: "What is Your old Phone Number?",
-      states: [
-        {
-          name: "10000001",
-          id: "1001"
-        },
-        {
-          name: "10000002",
-          id: "1002"
-        },
-        {
-          name: "10000003",
-          id: "1003"
-        },
-        {
-          name: "10000004",
-          id: "1004"
-        }
-      ]
-    },
-    {
-      id: 104,
-      name: "What is your Pet Name?",
-      states: [
-        {
-          name: "Daisy",
-          id: "1001"
-        },
-        {
-          name: "Teddy",
-          id: "1002"
-        },
-        {
-          name: "Coco",
-          id: "1003"
-        },
-        {
-          name: "Rosie",
-          id: "1004"
-        }
-      ]
-    }
-  ]
+  getUserCount() {
+    this.userService.getUserCount().subscribe((countRes) => {
+      this.userCount = countRes;
+    })
+  }
 
-  onSelectEvent(selectedData) {
-    console.log('----------->', selectedData);
-    this.onselectValue = selectedData.states;
+  getItemCount() {
+    this.itemService.getItemCount().subscribe((countRes) => {
+      this.itemCount = countRes;
+    })
+  }
+
+  getProjectCount() {
+    this.projectService.getProjectCount().subscribe((countRes) => {
+      this.projectCount = countRes;
+    })
+  }
+
+  getProjects() {
+    this.projectService.getProjects().subscribe((response) => {
+      if (response.length) {
+        this.projectRecords = response;
+      } else {
+        this.projectError = "No record found";
+      }
+    }, (error) => {
+      this.projectError = error.message ? error.message : "No record found";
+    })
+  }
+
+  getUser() {
+    this.userService.getUsers().subscribe((response) => {
+      if (response) {
+        this.userRecord = response;
+      } else {
+        this.userError = "No record found";
+      }
+    }, (error) => {
+      this.userError = error.message ? error.message : "No record found";
+    })
+  }
+
+  getItems() {
+    this.itemService.getItem().subscribe((response) => {
+      if (response) {
+        this.itemRecords = response;
+      } else {
+        this.itemError = "No record found";
+      }
+    }, (error) => {
+      this.itemError = error.message ? error.message : "No record found";
+    })
   }
 
 }

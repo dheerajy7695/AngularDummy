@@ -35,6 +35,10 @@ export class UserService {
     return this.http.get<any>(`${this.baseUrl}getById/` + id);
   }
 
+  getUserByUsername(username: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}getByUsername/` + username);
+  }
+
   createUser(createUserPayload) {
     return this.http.post(`${this.baseUrl}create-user`, createUserPayload).pipe(catchError(this.handleError));
   }
@@ -45,6 +49,10 @@ export class UserService {
 
   deleteUser(id: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}delete-user/` + id);
+  }
+
+  getUserCount(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}user/getCount`);
   }
 
   handleError(error: HttpErrorResponse) {

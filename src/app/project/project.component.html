@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-lg-12 wrapper">
-        <div class="row" *ngIf="listGridView=='Grid'">
+        <div class="row wrapper-contet" *ngIf="listGridView=='Grid'">
             <div class="col-sm-3 m-t-sm pb-10" *ngFor="let project of projectList; let i=index">
                 <div class="card">
                     <div class="card-header card_hed_bg p-xs bg_light_blue font-16">
@@ -37,46 +37,40 @@
                     </div>
                     <div class="card-body p-xs bg-blue-hexa">
                         <span>
-                            <td class="hed_tag font-bold">ManagerId</td> : <td>{{project.managerId}}</td>
+                            <td class="text-warning">ManagerId</td> :
+                            <td class="font-13"> {{project?.managerId}} </td>
                         </span><br>
                         <span>
-                            <td class="hed_tag font-bold">Manager Name</td> : <td>{{project.managerName}}</td>
+                            <td class="text-warning">Manager Name</td> :
+                            <td class="font-13"> {{project?.managerName}} </td>
                         </span><br>
                         <span>
-                            <td class="hed_tag font-bold">CustodianId</td> : <td>{{project.custodianId}}</td>
+                            <td class="text-warning">CustodianId</td> :
+                            <td class="font-13"> {{project?.custodianId}} </td>
                         </span><br>
                         <span>
-                            <td class="hed_tag font-bold">Custodian Name</td> : <td>{{project.custodianName}}</td>
+                            <td class="text-warning">Custodian Name</td> :
+                            <td class="font-13"> {{project?.custodianName}} </td>
                         </span><br>
-                        <span>
-                            <td class="hed_tag font-bold">Manager Start Date</td> :
-                            <td> {{project.managerStartDate|date}}</td>
-                        </span><br>
-                        <span>
-                            <td class="hed_tag font-bold">Custodian Date</td> : <td>{{project.custodianDate|date}}</td>
-                        </span><br>
-                        <span>
-                            <td class="hed_tag font-bold">Ship Date</td> : <td>{{project.shipDate|date}}</td>
-                        </span><br>
-                        <span> {{project.comments}} </span>
+                        <div class="font-12 h-40 m-t-xxs"> {{project.comments | slice:0:110}}... </div>
                     </div>
-                    <div class="card-footer bg_card_footer_project p-xs">
-                        <div class="">
+                    <div class="card-footer bg_card_footer_project" style="padding: 7px 7px 1px 8px;">
+                        <div class="m-t-n-xs">
                             <span>
                                 <td class="font-bold">Created</td> : <td>{{project.created|date}}</td><br>
                                 <td class="font-bold">Updated</td> : <td>{{project.updated|date}}</td>
                             </span>
-                            <div class="btn-group btn-group-sm pull-right m-t-n-sm">
-                                <button type="button" class="btn btn-success mr-1"
-                                    (click)="editProjectModal(project,template)">
+                            <div class="btn-group btn-group-sm pull-right m-t-n">
+                                <button type="button" class="btn btn-success mr-1" data-toggle="tooltip" title="Edit"
+                                    data-placement="bottom" (click)="editProjectModal(project,template)">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-success mr-1"
-                                    (click)="deleteProjectModal(project,template1)">
+                                <button type="button" class="btn btn-success mr-1" data-toggle="tooltip" title="Delete"
+                                    data-placement="bottom" (click)="deleteProjectModal(project,template1)">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <button type="button" class="btn btn-success mr-1"
-                                    (click)="projectInfoModal(project,infoTemplate)">
+                                <button type="button" class="btn btn-success mr-1" data-toggle="tooltip" title="Details"
+                                    data-placement="bottom" (click)="projectInfoModal(project,infoTemplate)">
                                     <i class="fa fa-info-circle"></i>
                                 </button>
                             </div>
@@ -85,7 +79,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="listGridView=='List'">
+        <div class="row wrapper-contet" *ngIf="listGridView=='List'">
             <div class="col-lg-12">
                 <table class="table table-bordered">
                     <thead>
@@ -404,8 +398,50 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body">
-        <h3 class="text-center">You Will get Updated Early </h3>
+    <div class="modal-body bg-blue-hexa">
+        <div class="">
+            <div>
+                <span class="text-success">Project Id</span> :
+                <small class="font-13">{{projectDetails?.projectId}}</small>
+                <span class="pull-right">
+                    <span class="text-success">Project Name</span> :
+                    <small class="font-13">{{projectDetails?.projectName}}</small>
+                </span>
+            </div>
+            <div>
+                <span class="text-success">Manager Id</span> :
+                <small class="font-13">{{projectDetails?.managerId}}</small>
+                <span class="pull-right">
+                    <span class="text-success">Manager Name</span> :
+                    <small class="font-13">{{projectDetails?.managerName}}</small>
+                </span>
+            </div>
+            <div>
+                <span class="text-success">Customer Id</span> :
+                <small class="font-13">{{projectDetails?.custodianId}}</small>
+                <span class="pull-right">
+                    <span class="text-success">Customer Name</span> :
+                    <small class="font-13">{{projectDetails?.custodianName}}</small>
+                </span>
+            </div>
+            <div>
+                <span class="text-success">Manager Start Date</span> :
+                <small class="font-13">{{projectDetails?.managerStartDate|date}}</small>
+                <span class="pull-right">
+                    <span class="text-success">Customer Date</span> :
+                    <small class="font-13">{{projectDetails?.custodianDate|date}}</small>
+                </span>
+            </div>
+            <div>
+                <span class="text-success">Ship Date</span> :
+                <small class="font-13">{{projectDetails?.shipDate|date}}</small>
+                <span class="pull-right">
+                    <span class="text-success">Expiry Name</span> :
+                    <small class="font-13">{{projectDetails?.expiryDate |date}}</small>
+                </span>
+            </div>
+            <div class="font-12 h-40 m-t-sm"> {{projectDetails?.comments}}</div>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-info" (click)="closeModal()">Close</button>

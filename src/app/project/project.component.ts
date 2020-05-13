@@ -27,6 +27,7 @@ export class ProjectComponent implements OnInit {
   chosenDate: any;
   updateRes: any;
   updateProjectData: any;
+  projectDetails: any;
 
   constructor(private formBuilder: FormBuilder,
     private modalService: BsModalService,
@@ -172,6 +173,7 @@ export class ProjectComponent implements OnInit {
 
   projectInfoModal(projectData, template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+    this.projectDetails = projectData;
   }
 
 }

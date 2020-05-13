@@ -39,6 +39,10 @@ export class ProjectService {
     return this.http.get<any>(`${this.baseUrl}serach/` + projectName).pipe(catchError(this.handleError));
   }
 
+  getProjectCount(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}getCount`);
+  }
+
   handleError(error: HttpErrorResponse) {
     console.log("Getting error", error);
     return throwError(error);

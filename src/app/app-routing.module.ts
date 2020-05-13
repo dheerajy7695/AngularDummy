@@ -8,6 +8,8 @@ import { ProjectComponent } from './project/project.component';
 import { UserComponent } from './user/user.component';
 import { from } from 'rxjs';
 import { SerachComponent } from './serach/serach.component';
+import { ItemComponent } from './item/item.component';
+import { AuthGuard } from './authGuard/auth.guard';
 
 
 const routes: Routes = [
@@ -22,23 +24,33 @@ const routes: Routes = [
   },
   {
     path: "home",
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "header",
-    component: HeaderComponent
+    component: HeaderComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "project",
-    component: ProjectComponent
+    component: ProjectComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "user",
-    component: UserComponent
+    component: UserComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "search",
-    component: SerachComponent
+    component: SerachComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "item",
+    component: ItemComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

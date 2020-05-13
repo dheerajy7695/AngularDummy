@@ -17,6 +17,12 @@ import { UserComponent } from './user/user.component';
 
 import { ModalModule } from 'ngx-bootstrap';
 import { SerachComponent } from './serach/serach.component';
+import { ItemComponent } from './item/item.component';
+
+import { NgSelectModule } from '@ng-select/ng-select';
+
+import { AuthService } from './authGuard/auth.service';
+import { AuthGuard } from './authGuard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -26,7 +32,8 @@ import { SerachComponent } from './serach/serach.component';
     LoginComponent,
     ProjectComponent,
     UserComponent,
-    SerachComponent
+    SerachComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +43,10 @@ import { SerachComponent } from './serach/serach.component';
     HttpClientModule,
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgSelectModule
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
