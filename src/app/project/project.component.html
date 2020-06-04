@@ -160,10 +160,10 @@
                                             ProjectId is required
                                         </span>
                                         <span *ngIf="projectForm.get('projectId').errors.minlength">
-                                            ProjectId must be at least 5 characters long.
+                                            ProjectId must be at least 3 characters long.
                                         </span>
                                         <span *ngIf="projectForm.get('projectId').errors.maxlength">
-                                            ProjectId cannot exceed 15 characters.
+                                            ProjectId cannot exceed 10 characters.
                                         </span>
                                     </div>
                                 </div>
@@ -181,7 +181,7 @@
                                             Project Name must be at least 5 characters long.
                                         </span>
                                         <span *ngIf="projectForm.get('projectName').errors?.maxlength">
-                                            Project Name cannot exceed 15 characters.
+                                            Project Name cannot exceed 50 characters.
                                         </span>
                                     </div>
                                 </div>
@@ -196,10 +196,10 @@
                                             ManagerId is required
                                         </span>
                                         <span *ngIf="projectForm.get('managerId').errors?.minlength">
-                                            ManagerId must be at least 5 characters long.
+                                            ManagerId must be at least 3 characters long.
                                         </span>
                                         <span *ngIf="projectForm.get('managerId').errors?.maxlength">
-                                            ManagerId cannot exceed 15 characters.
+                                            ManagerId cannot exceed 10 characters.
                                         </span>
                                     </div>
                                 </div>
@@ -217,7 +217,7 @@
                                             Password must be at least 5 characters long.
                                         </span>
                                         <span *ngIf="projectForm.get('managerName').errors?.maxlength">
-                                            Password cannot exceed 15 characters.
+                                            Password cannot exceed 50 characters.
                                         </span>
                                     </div>
                                 </div>
@@ -275,7 +275,7 @@
                                             Custodian Name must be at least 5 characters long.
                                         </span>
                                         <span *ngIf="projectForm.get('custodianName').errors?.maxlength">
-                                            Custodian Name cannot exceed 15 characters.
+                                            Custodian Name cannot exceed 50 characters.
                                         </span>
                                     </div>
                                 </div>
@@ -349,6 +349,9 @@
                                         </span>
                                         <span *ngIf="projectForm.get('comments').errors.minlength">
                                             Comment must be at least 5 characters long.
+                                        </span>
+                                        <span *ngIf="projectForm.get('comments').errors?.maxlength">
+                                            Comment cannot exceed 150 characters.
                                         </span>
                                     </div>
                                 </div>

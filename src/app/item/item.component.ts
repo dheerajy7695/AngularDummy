@@ -48,10 +48,10 @@ export class ItemComponent implements OnInit {
 
   createForm() {
     this.itemForm = this.formBuilder.group({
-      itemId: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-      itemName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-      itemQuantity: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(15)])],
-      comments: ['', Validators.required],
+      itemId: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
+      itemName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])],
+      itemQuantity: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])],
+      comments: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(150)])],
       projectName: ['', Validators.required]
     })
   };

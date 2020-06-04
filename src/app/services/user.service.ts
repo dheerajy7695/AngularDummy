@@ -27,8 +27,12 @@ export class UserService {
     return this.http.post(`${this.baseUrl}loginUser`, reqPayload).pipe(catchError(this.handleError));
   }
 
-  getUsers() {
-    return this.http.get(`${this.baseUrl}getUser`);
+  // getUsers() {
+  //   return this.http.get(`${this.baseUrl}getUser`);
+  // }
+
+  getUsers(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}getUser`);
   }
 
   getUserById(id: number): Observable<any> {
@@ -39,12 +43,16 @@ export class UserService {
     return this.http.get<any>(`${this.baseUrl}getByUsername/` + username);
   }
 
+  getUserByEmail(email: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}getUserByEmail/` + email);
+  }
+
   createUser(createUserPayload) {
     return this.http.post(`${this.baseUrl}create-user`, createUserPayload).pipe(catchError(this.handleError));
   }
 
-  updateUser(updateUserPayload): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}update-user`, + updateUserPayload.id, updateUserPayload);
+  updateUser(updatePayload): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}update/${updatePayload._id}`, updatePayload);
   }
 
   deleteUser(id: number): Observable<any> {

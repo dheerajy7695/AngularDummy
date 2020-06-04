@@ -41,17 +41,17 @@ export class ProjectComponent implements OnInit {
 
   createForm() {
     this.projectForm = this.formBuilder.group({
-      projectId: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])],
+      projectId: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
       projectName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])],
-      managerId: ['', Validators.required],
-      managerName: ['', [Validators.required]],
-      managerStartDate: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(15)])],
-      custodianId: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(15)])],
-      custodianName: ['', Validators.compose([Validators.required])],
+      managerId: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
+      managerName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])],
+      managerStartDate: ['', Validators.compose([Validators.required,])],
+      custodianId: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
+      custodianName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])],
       custodianDate: ['', Validators.required],
       shipDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
-      comments: ['', Validators.required]
+      comments: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(150)])],
     })
 
   }

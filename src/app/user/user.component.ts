@@ -3,7 +3,7 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-
+import * as _ from 'lodash';
 import { from } from 'rxjs';
 
 @Component({
@@ -25,6 +25,9 @@ export class UserComponent implements OnInit {
   genderData: { id: number; name: string; }[];
   submitted: boolean = false;
   userData: Object;
+  updateUserData: any;
+  updateRes: any;
+  userDetails: any;
 
   constructor(private userService: UserService,
     private formBuilder: FormBuilder,
@@ -37,23 +40,14 @@ export class UserComponent implements OnInit {
     this.createUserForm();
   }
 
-  getUserList() {
-    this.userService.getUsers().subscribe((userRespose) => {
-      this.userList = userRespose;
-      console.log(userRespose);
-    }, (error) => {
-      this.userError = error;
-    })
-  }
-
   createUserForm() {
     this.userForm = this.formBuilder.group({
-      username: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])],
+      username: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
       confirmPassword: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      firstName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(15)])],
-      lastName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(15)])],
+      firstName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      lastName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
       phone: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')])],
       securityKey: ['', Validators.required],
       securityValue: ['', Validators.required],
@@ -69,50 +63,78 @@ export class UserComponent implements OnInit {
     })
   }
 
+  getUserList() {
+    this.userService.getUsers().subscribe((userRespose) => {
+      let loginUser = localStorage.getItem("currentUser");
+      _.remove(userRespose, function (e) { return e.username == loginUser });
+
+      this.userList = userRespose;
+      console.log(userRespose);
+    }, (error) => {
+      this.userError = error;
+    })
+  }
+
   gridListView(viewVale) {
     this.listGridView = viewVale;
   }
 
-  createUserClick() {
-    this.router.navigate['/add-user'];
+  editUserModal(userData, template: TemplateRef<any>) {
+    this.updateUserData = userData
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+    this.userForm.patchValue(userData);
   }
 
-  editUserClick(userId: number) {
-    if (userId) {
-      this.router.navigate(['/edit-user', userId]);
-    }
-  };
-
-  openDeleteModel(userData) {
-    this.deleteUserData = userData;
-    this.deleteModel = true;
-  }
-
-  deleteUserClick(userId: number) {
-    if (userId) {
-      this.deleteErrorMessage = '';
-      this.userService.deleteUser(userId).subscribe(
-        (response) => {
-          this.deleteModel = false;
-          this.getUsers();
-        },
-        (error) => {
-          this.deleteErrorMessage = error.error;
+  UpdateUser() {
+    this.submitted = false;
+    this.userError = "";
+    if (this.userForm.invalid) {
+      this.submitted = true;
+      return
+    } else {
+      let updatePayload = this.userForm.value;
+      updatePayload._id = this.updateUserData._id;
+      if (updatePayload) {
+        this.userService.updateUser(updatePayload).subscribe((response) => {
+          this.updateRes = response;
+          this.closeUserModal();
+          this.getUserList();
+        }, ((error) => {
+          this.userError = error.message || 'Something went wrong, Please try agian';
         })
+        )
+      }
     }
   }
 
-  getUsers() {
-    throw new Error("Method not implemented.");
-  };
+  openDeleteModel(userData, template) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-md' });
+    this.deleteUserData = userData;
+  }
+
+  deleteUser(userData) {
+    if (userData && userData.userId) {
+      this.deleteErrorMessage = '';
+      this.userService.deleteUser(userData.userId).subscribe((response) => {
+        this.getUserList();
+        this.modalRef.hide();
+        this.modalRef = null;
+      }, (error) => {
+        this.deleteErrorMessage = error.error;
+      });
+    }
+  }
 
   openCreateModal(template: TemplateRef<any>) {
+    this.createUserForm();
+    this.updateUserData = '';
     this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 
   closeUserModal() {
     this.modalRef.hide();
     this.modalRef = null;
+    this.submitted = false;
   }
 
   createUser() {
@@ -149,6 +171,11 @@ export class UserComponent implements OnInit {
         )
       }
     }
+  }
+
+  userInfoModal(userData, template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+    this.userDetails = userData;
   }
 
 }

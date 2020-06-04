@@ -52,3 +52,13 @@
     position: absolute;
     right: 0px;
 }
+
+.profile_view{
+    background-color: red;
+    height: 40px;
+    width: 40px;
+    border-radius: 64px;
+    font-size: 24px;
+    display: inline-block;
+    text-align: center;
+}

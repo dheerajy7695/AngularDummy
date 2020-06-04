@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { from } from 'rxjs';
 import { AuthService } from '../authGuard/auth.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,8 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   addUserForm: FormGroup;
+  updatePwdForm: FormGroup;
+  resetForm: FormGroup;
   invalidLogin: boolean = false;
   invalidLoginError: any;
   userData: any;
@@ -23,7 +26,14 @@ export class LoginComponent implements OnInit {
   genderData: { id: number; name: string; }[];
   getUserError: any;
   formView: string;
-
+  wrongEmail: string;
+  navigateOnUpdatePWD: boolean = false;
+  emailSubmit: boolean;
+  passHide: boolean = true;
+  cofmPassHide: boolean = true;
+  updatePwdUserData: any;
+  updateError: string;
+  updatedUser: any;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -61,16 +71,19 @@ export class LoginComponent implements OnInit {
   showHideRegisterForm(value: string) {
     this.formView = value;
     this.submitted = false;
+    if (value === 'Reset') {
+      this.createRestForm();
+    }
   };
 
   createUserForm() {
     this.addUserForm = this.formBuilder.group({
-      username: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(15)])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(15)])],
+      username: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
       confirmPassword: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      firstName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(15)])],
-      lastName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(15)])],
+      firstName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      lastName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
       phone: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')])],
       securityKey: ['', Validators.required],
       securityValue: ['', Validators.required],
@@ -85,7 +98,7 @@ export class LoginComponent implements OnInit {
     }
     this.invalidLogin = false;
 
-    const loginPayload = {
+    let loginPayload = {
       username: this.loginForm.controls.username.value,
       password: this.loginForm.controls.password.value
     };
@@ -97,9 +110,8 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       }
     }, (error) => {
-      this.invalidLoginError = error.error;
+      this.invalidLoginError = error.error ? error.error.message : "Wrong password!";
       this.invalidLogin = true;
-      alert(error.error);
     });
   };
 
@@ -133,5 +145,94 @@ export class LoginComponent implements OnInit {
       this.submitted = false;
     }
   };
+
+  createRestForm() {
+    this.resetForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+    })
+  };
+
+  resetPwdNext() {
+    this.emailSubmit = false;
+    if (!this.resetForm.invalid) {
+      let userEmail = this.resetForm.controls.email.value;
+      this.userService.getUserByEmail(userEmail).subscribe((user) => {
+        if (user) {
+          this.updatePwdUserData = user;
+          this.formView = 'UpdatePWDView';
+          this.createUpdatePWDForm();
+
+          this.passHide = true;
+          this.cofmPassHide = true;
+        } else {
+          this.wrongEmail = 'User not found!';
+        }
+      }, (error) => {
+        this.wrongEmail = 'User not found!';
+      })
+    } else {
+      this.emailSubmit = true;
+    }
+  };
+
+  showHideCnfmPwd() {
+    if (this.cofmPassHide) {
+      this.cofmPassHide = false;
+    } else {
+      this.cofmPassHide = true;
+    }
+  };
+
+  showHidePwd() {
+    if (this.passHide) {
+      this.passHide = false;
+    } else {
+      this.passHide = true;
+    }
+  }
+
+  createUpdatePWDForm() {
+    this.updatePwdForm = this.formBuilder.group({
+      password: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(25)])],
+      confirm_password: ['', [Validators.required]]
+    }, { validator: this.confirmedValidator('password', 'confirm_password') })
+  };
+
+  get pwd() { return this.updatePwdForm.controls; }
+
+  confirmedValidator(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
+        return;
+      }
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ confirmedValidator: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    }
+  }
+
+  updatePwd() {
+    this.emailSubmit = false;
+    if (!this.updatePwdForm.invalid) {
+
+      this.updatePwdUserData["password"] = this.updatePwdForm.controls.password.value;
+      this.userService.updateUser(this.updatePwdUserData).subscribe((user) => {
+        if (user) {
+          this.updatedUser = user;
+          this.formView = 'Login';
+        } else {
+          this.updateError = 'User not found!';
+        }
+      }, (error) => {
+        this.updateError = 'User not found!';
+      })
+    } else {
+      this.emailSubmit = true;
+    }
+  }
 
 }

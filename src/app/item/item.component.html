@@ -10,9 +10,6 @@
                         <button type="button" class="btn btn-outline-info mr-1"
                             (click)="openCreateItemModel(template)">Create Item
                         </button>
-                        <button type="button" class="btn btn-outline-info mr-1" (click)="refreshItem()">
-                            <i class="fa fa-refresh"></i> Refresh
-                        </button>
                         <button class="btn btn-outline-info mr-1" (click)="gridListView('List')"
                             [ngClass]="{'active':listGridView=='List'}">
                             <i class="fa fa-bars"></i> List
@@ -144,10 +141,10 @@
                                 ItemId is required
                             </span>
                             <span *ngIf="itemForm.get('itemId').errors.minlength">
-                                ItemId must be at least 2 characters long.
+                                ItemId must be at least 3 characters long.
                             </span>
                             <span *ngIf="itemForm.get('itemId').errors.maxlength">
-                                ItemId cannot exceed 50 characters.
+                                ItemId cannot exceed 10 characters.
                             </span>
                         </div>
                     </div>
@@ -162,7 +159,7 @@
                                 Item Name is required
                             </span>
                             <span *ngIf="itemForm.get('itemName').errors?.minlength">
-                                Item Name must be at least 2 characters long.
+                                Item Name must be at least 5 characters long.
                             </span>
                             <span *ngIf="itemForm.get('itemName').errors?.maxlength">
                                 Item Name cannot exceed 50 characters.
@@ -180,7 +177,7 @@
                                 Item Quantity is required
                             </span>
                             <span *ngIf="itemForm.get('itemQuantity').errors?.minlength">
-                                Item Quantity must be at least 2 characters long.
+                                Item Quantity must be at least 3 characters long.
                             </span>
                             <span *ngIf="itemForm.get('itemQuantity').errors?.maxlength">
                                 Item Quantity cannot exceed 50 characters.
@@ -196,6 +193,12 @@
                             *ngIf="(submitted && itemForm.get('comments').errors) ||(itemForm.get('comments').errors && (itemForm.get('comments').touched || itemForm.get('comments').dirty))">
                             <span *ngIf="itemForm.get('comments').errors.required">
                                 Comment is required
+                            </span>
+                            <span *ngIf="itemForm.get('comments').errors.minlength">
+                                Comment must be at least 5 characters long.
+                            </span>
+                            <span *ngIf="itemForm.get('comments').errors?.maxlength">
+                                Comment cannot exceed 150 characters.
                             </span>
                         </div>
                     </div>

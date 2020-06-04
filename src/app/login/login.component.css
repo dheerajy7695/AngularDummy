@@ -217,3 +217,11 @@
 .font-size-small{
     font-size: small;
 }
+
+.form-gap {
+    padding-top: 70px;
+}
+
+.p-1{
+    padding: 4px !important;
+}

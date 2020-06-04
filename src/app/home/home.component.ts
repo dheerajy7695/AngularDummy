@@ -11,7 +11,7 @@ import { ItemService } from '../services/item/item.service';
 export class HomeComponent implements OnInit {
 
   onselectValue: any;
-  userRecord: Object;
+  userRecord: any;
   projectError: string;
   projectRecords: any;
   userError: string;
