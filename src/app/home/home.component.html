@@ -13,7 +13,8 @@
                         <div class="row">
                             <div class="col-lg-3"><i class="fa fa-users fa-5x"></i></div>
                             <div class="col-lg-9 text-right">
-                                <div class="huge ng-binding">{{userCount?.count-1}}</div>
+                                <div class="huge ng-binding" *ngIf="userCount">{{userCount?.count-1}}</div>
+                                <div class="huge ng-binding" *ngIf="!userCount">0</div>
                                 <div>Total Users</div>
                             </div>
                         </div>
@@ -35,7 +36,8 @@
                                 <i class="fa fa-cogs fa-5x"></i>
                             </div>
                             <div class="col-lg-9 text-right">
-                                <div class="huge ng-binding">{{projectCount?.count}} </div>
+                                <div class="huge ng-binding" *ngIf="projectCount">{{projectCount?.count}}</div>
+                                <div class="huge ng-binding" *ngIf="!projectCount">0</div>
                                 <div>Total Projects</div>
                             </div>
                         </div>
@@ -57,7 +59,8 @@
                                 <i class="fa fa-sitemap fa-5x"></i>
                             </div>
                             <div class="col-lg-9 text-right">
-                                <div class="huge ng-binding">{{itemCount?.count}}</div>
+                                <div class="huge ng-binding" *ngIf="itemCount">{{itemCount?.count}}</div>
+                                <div class="huge ng-binding" *ngIf="!itemCount">0</div>
                                 <div>Total Items</div>
                             </div>
                         </div>
@@ -83,7 +86,7 @@
                         </div>
                     </div>
                     <div class="card-body p-0 height_216">
-                        <table class="table mb-0">
+                        <table class="table mb-0" *ngIf="projectRecords">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -101,6 +104,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="text-center mt-5" *ngIf="!projectRecords">
+                            <span>No record found ...</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,7 +119,7 @@
                         </div>
                     </div>
                     <div class="card-body p-0 height_216">
-                        <table class="table mb-0">
+                        <table class="table mb-0" *ngIf="itemRecords">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -131,12 +137,15 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="text-center mt-5" *ngIf="!itemRecords">
+                            <span>No record found ...</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-3" *ngIf="userRecord">
+        <div class="row mt-3">
             <div class="col-lg-12 mb-3">
                 <div class="card">
                     <div class="card-header">
@@ -146,7 +155,7 @@
                         </div>
                     </div>
                     <div class="card-body p-0 height_216">
-                        <table class="table mb-0">
+                        <table class="table mb-0" *ngIf="userRecord">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -170,6 +179,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="text-center mt-5" *ngIf="!userRecord">
+                            <span>No record found ...</span>
+                        </div>
                     </div>
                 </div>
             </div>

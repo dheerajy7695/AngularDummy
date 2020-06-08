@@ -68,10 +68,13 @@ export class UserComponent implements OnInit {
       let loginUser = localStorage.getItem("currentUser");
       _.remove(userRespose, function (e) { return e.username == loginUser });
 
-      this.userList = userRespose;
-      console.log(userRespose);
+      if (userRespose.length != 0) {
+        this.userList = userRespose;
+      } else {
+        this.userError = "No record found...";
+      }
     }, (error) => {
-      this.userError = error;
+      this.userError = "No record found...";
     })
   }
 

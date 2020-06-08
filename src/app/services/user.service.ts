@@ -10,7 +10,8 @@ import { from } from 'rxjs';
 })
 export class UserService {
 
-  baseUrl: string = 'http://localhost:4000/api/';
+  // baseUrl: string = 'http://localhost:4000/api/';
+  baseUrl: string = 'https://dheeraj-nodejs-app.herokuapp.com/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -26,10 +27,6 @@ export class UserService {
   login(reqPayload) {
     return this.http.post(`${this.baseUrl}loginUser`, reqPayload).pipe(catchError(this.handleError));
   }
-
-  // getUsers() {
-  //   return this.http.get(`${this.baseUrl}getUser`);
-  // }
 
   getUsers(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}getUser`);

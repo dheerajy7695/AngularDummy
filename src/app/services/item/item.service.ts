@@ -8,7 +8,9 @@ import { catchError } from 'rxjs/operators';
 })
 export class ItemService {
 
-  baseUrl: string = 'http://localhost:4000/api/item/';
+  // baseUrl: string = 'http://localhost:4000/api/item/';
+  baseUrl: string = 'https://dheeraj-nodejs-app.herokuapp.com/api/item/';
+
 
   constructor(private http: HttpClient) { }
 
@@ -35,7 +37,7 @@ export class ItemService {
   searchItemByName(itemName: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}serach/` + itemName).pipe(catchError(this.handleError));
   }
-  
+
   getItemCount(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}getCount`);
   }

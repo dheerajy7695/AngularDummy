@@ -114,9 +114,11 @@ export class ProjectComponent implements OnInit {
     this.projectService.getProjects().subscribe((response) => {
       if (response) {
         this.projectList = response;
+      } else {
+        this.getErrorMsg = "No record found...";
       }
     }, (error) => {
-      this.getErrorMsg = error;
+      this.getErrorMsg = "No record found...";
     })
   }
 

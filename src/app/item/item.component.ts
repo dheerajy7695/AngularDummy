@@ -60,9 +60,11 @@ export class ItemComponent implements OnInit {
     this.itemService.getItem().subscribe((response) => {
       if (response) {
         this.itemList = response;
+      } else {
+        this.getErrorMsg = "No record found...";
       }
     }, (error) => {
-      this.getErrorMsg = error;
+      this.getErrorMsg = "No record found...";
     })
   }
 
