@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
         }
       }
     })
-
+    console.log('console in app component');
   }
 
   ngOnInit(): void {
